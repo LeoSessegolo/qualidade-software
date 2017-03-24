@@ -6,6 +6,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -20,8 +21,8 @@ public class Driver {
 	private static Driver instance;
 	private WebDriver webDriver;
 	
-	private Driver(WebDriver webDriver) {
-		this.webDriver = webDriver;
+	private Driver() {
+		this.webDriver = new ChromeDriver();
 	}
 	
 	/**
@@ -40,9 +41,9 @@ public class Driver {
 	 * InternetExplorerDriver, ChromeDriver, FirefoxDriver, 
 	 * OperaDriver, SafariDriver
 	 */
-	public static Driver getInstance(WebDriver webDriver) {
+	public static Driver getInstance() {
 		if (instance == null) {
-			instance = new Driver(webDriver);
+			instance = new Driver();
 		}
 		return instance;
 	}
@@ -61,6 +62,14 @@ public class Driver {
 	
 	public WebElement searchFieldByClassName(String fieldClassName) {
 		return webDriver.findElement(By.className(fieldClassName));
+	}
+
+	public WebElement searchFieldByCssSelector(String fieldCssSelector) {
+		return webDriver.findElement(By.cssSelector(fieldCssSelector));
+	}
+
+	public WebElement searchFieldByLinkText(String fielcLinkText) {
+		return webDriver.findElement(By.linkText(fielcLinkText));
 	}
 	
 	public WebDriver switchWindow(String windowName) {
