@@ -16,7 +16,7 @@ public class LoginTest {
 	
 	@BeforeClass
 	public static void beforeClass() {
-		System.setProperty("webdriver.chrome.driver", "C:/Users/I852172/Downloads/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 	}
 	
 	@Before
