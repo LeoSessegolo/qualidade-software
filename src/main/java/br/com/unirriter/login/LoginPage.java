@@ -1,55 +1,67 @@
 package br.com.unirriter.login;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-import br.com.unirriter.driver.Driver;
+import br.com.unirriter.driver.PageObjectDriver;
 
-public class LoginPage {
+public class LoginPage extends PageObjectDriver {
 	
+	@FindBy(linkText="Log in")
+	private WebElement logInButton;
+	
+	@FindBy(id="jsid-login-email-name")
 	private WebElement email;
+	
+	@FindBy(id="login-email-password")
 	private WebElement password;
-	private WebElement loginButton;
+	
+	@FindBy(css="input.btn.left")
+	private WebElement logIn;
+	
+	@FindBy(id="jsid-avatar")
 	private WebElement picture;
-	private WebElement myInfo;
 	
-	private Driver driver;
+	@FindBy(className="badge-toast-message")
+	private WebElement successfulMessage;
 	
-	public LoginPage() {
-		this.driver = Driver.getInstance();
+	public LoginPage(WebDriver webDriver) {
+		super(webDriver);
 	}
 	
 	public void login(String email, String password) {
-		driver.searchFieldByLinkText("Log in").click();
+		this.logInButton.click();
 		 
 		this.enterEmail(email);
 		this.enterPassword(password);
-		this.clickLogInButton();
+		this.clickLogin();
 	}
 	
 	private void enterEmail(String email) {
-		this.email = driver.searchFieldByID("jsid-login-email-name");
+		this.email.clear();
 		this.email.sendKeys(email);
 	}
 	
 	private void enterPassword(String password) {
-		this.password = driver.searchFieldByID("login-email-password");
+		this.password.clear();
 		this.password.sendKeys(password);
 	}
 	
-	private void clickLogInButton() {
-		loginButton = driver.searchFieldByCssSelector("input.btn.left");
-		loginButton.click();
+	private void clickLogin() {
+		logIn.click();
+	}
+	
+	public void clickPicture() {
+		this.waitUntilFieldIsLocated("jsid-avatar", 10);
+		picture.click();
+	}
+	
+	public boolean isSuccessfulMessageShown() {
+		return successfulMessage.isDisplayed();
 	}
 
-	public String getLoginInfo() {
-		driver.waitUntilFieldIsLocated("jsid-avatar", 10);
-		picture = driver.searchFieldByID("jsid-avatar");
-		picture.click();
-		
-		driver.searchFieldByID("jsid-my-profile").click();
-		
-		myInfo = driver.searchFieldByClassName("info");
-		
-		return myInfo.getText();
+	public String getCallBackMessage() {
+		return successfulMessage.getText();
 	}
 }

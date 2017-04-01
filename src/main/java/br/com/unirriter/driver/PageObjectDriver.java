@@ -6,7 +6,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,14 +16,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * @author Leonardo Sessegolo
  *
  */
-public class Driver {
+public abstract class PageObjectDriver {
 	
-	private static Driver instance;
-	private WebDriver webDriver;
-	
-	private Driver() {
-		this.webDriver = new ChromeDriver();
-	}
+	protected WebDriver webDriver;
 	
 	/**
 	 * Initialize the driver class passing the webDriver used.
@@ -41,11 +36,9 @@ public class Driver {
 	 * InternetExplorerDriver, ChromeDriver, FirefoxDriver, 
 	 * OperaDriver, SafariDriver
 	 */
-	public static Driver getInstance() {
-		if (instance == null) {
-			instance = new Driver();
-		}
-		return instance;
+	public PageObjectDriver(WebDriver webDriver) {
+		this.webDriver = webDriver;
+		PageFactory.initElements(this.webDriver, this);
 	}
 	
 	public void openBrowser(String url) {
@@ -94,15 +87,14 @@ public class Driver {
 	
 	public void waitScreenToLoad(String screenName, int timeout) {
 		(new WebDriverWait(webDriver, timeout)).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d) {
-                return d.getTitle().toLowerCase().startsWith(screenName);
-            }
-        });
+			public Boolean apply(WebDriver d) {
+				return d.getTitle().toLowerCase().startsWith(screenName);
+			}
+		});
 	}
 	
 	public void waitUntilFieldIsLocated(String fieldID, int timeout) {
-		(new WebDriverWait(webDriver, timeout))
-			.until(ExpectedConditions.presenceOfElementLocated(By.id(fieldID)));
+		(new WebDriverWait(webDriver, timeout)).until(ExpectedConditions.presenceOfElementLocated(By.id(fieldID)));
 	}
 	
 	public void wait(int timeoutInSeconds) {

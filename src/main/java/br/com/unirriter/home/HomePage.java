@@ -1,22 +1,22 @@
 package br.com.unirriter.home;
 
-import br.com.unirriter.driver.Driver;
+import org.openqa.selenium.WebDriver;
 
-public class HomePage {
+import br.com.unirriter.driver.PageObjectDriver;
+
+public class HomePage extends PageObjectDriver {
 
 	public static final String URL = "http://9gag.com/";
 
-	private Driver driver;
-	
-	public HomePage() {
-		this.driver = Driver.getInstance();
+	public HomePage(WebDriver webDriver) {
+		super(webDriver);
 	}
 	
 	public void openHomePage() {
-		driver.openBrowser(URL);
+		this.openBrowser(URL);
 	}
 	
 	public void closeHomePage() {
-		driver.closeBrowser();
+		this.closeBrowser();
 	}
 }
