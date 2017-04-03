@@ -1,6 +1,7 @@
 package br.com.unirriter.driver;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -65,8 +66,20 @@ public abstract class PageObjectDriver {
 		return webDriver.findElement(By.linkText(fielcLinkText));
 	}
 	
-	public WebDriver switchWindow(String windowName) {
-		return webDriver.switchTo().window(windowName);
+	public void switchWindow(String currentTab) {
+		Set<String> tabs = webDriver.getWindowHandles();
+		Iterator<String> iterator = tabs.iterator();
+		
+		while(iterator.hasNext()) {
+			String index = iterator.next();
+			if(!index.equals(currentTab)) {
+				webDriver.switchTo().window(index);
+			}
+		}
+	}
+	
+	public String getCurrentTab() {
+		return webDriver.getWindowHandle();
 	}
 	
 	public WebDriver switchFrameInsideWindow(String frameName) {
@@ -94,11 +107,12 @@ public abstract class PageObjectDriver {
 	}
 	
 	public void waitUntilFieldIsLocated(String fieldID, int timeout) {
-		(new WebDriverWait(webDriver, timeout)).until(ExpectedConditions.presenceOfElementLocated(By.id(fieldID)));
+		(new WebDriverWait(webDriver, timeout))
+			.until(ExpectedConditions.presenceOfElementLocated(By.id(fieldID)));
 	}
 	
-	public void wait(int timeoutInSeconds) {
-		webDriver.manage().timeouts().implicitlyWait(timeoutInSeconds, TimeUnit.SECONDS);
+	public void wait(int timeoutInSeconds) throws InterruptedException {
+		Thread.sleep(timeoutInSeconds*1000);
 	}
 	
 	public void closeBrowser() {
