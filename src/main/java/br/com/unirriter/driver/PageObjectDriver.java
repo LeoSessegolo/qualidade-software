@@ -1,11 +1,13 @@
 package br.com.unirriter.driver;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,14 +17,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * @author Leonardo Sessegolo
  *
  */
-public class Driver {
+public abstract class PageObjectDriver {
 	
-	private static Driver instance;
-	private WebDriver webDriver;
-	
-	private Driver(WebDriver webDriver) {
-		this.webDriver = webDriver;
-	}
+	protected WebDriver webDriver;
 	
 	/**
 	 * Initialize the driver class passing the webDriver used.
@@ -40,11 +37,9 @@ public class Driver {
 	 * InternetExplorerDriver, ChromeDriver, FirefoxDriver, 
 	 * OperaDriver, SafariDriver
 	 */
-	public static Driver getInstance(WebDriver webDriver) {
-		if (instance == null) {
-			instance = new Driver(webDriver);
-		}
-		return instance;
+	public PageObjectDriver(WebDriver webDriver) {
+		this.webDriver = webDriver;
+		PageFactory.initElements(this.webDriver, this);
 	}
 	
 	public void openBrowser(String url) {
@@ -62,9 +57,29 @@ public class Driver {
 	public WebElement searchFieldByClassName(String fieldClassName) {
 		return webDriver.findElement(By.className(fieldClassName));
 	}
+
+	public WebElement searchFieldByCssSelector(String fieldCssSelector) {
+		return webDriver.findElement(By.cssSelector(fieldCssSelector));
+	}
+
+	public WebElement searchFieldByLinkText(String fielcLinkText) {
+		return webDriver.findElement(By.linkText(fielcLinkText));
+	}
 	
-	public WebDriver switchWindow(String windowName) {
-		return webDriver.switchTo().window(windowName);
+	public void switchWindow(String currentTab) {
+		Set<String> tabs = webDriver.getWindowHandles();
+		Iterator<String> iterator = tabs.iterator();
+		
+		while(iterator.hasNext()) {
+			String index = iterator.next();
+			if(!index.equals(currentTab)) {
+				webDriver.switchTo().window(index);
+			}
+		}
+	}
+	
+	public String getCurrentTab() {
+		return webDriver.getWindowHandle();
 	}
 	
 	public WebDriver switchFrameInsideWindow(String frameName) {
@@ -85,10 +100,10 @@ public class Driver {
 	
 	public void waitScreenToLoad(String screenName, int timeout) {
 		(new WebDriverWait(webDriver, timeout)).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d) {
-                return d.getTitle().toLowerCase().startsWith(screenName);
-            }
-        });
+			public Boolean apply(WebDriver d) {
+				return d.getTitle().toLowerCase().startsWith(screenName);
+			}
+		});
 	}
 	
 	public void waitUntilFieldIsLocated(String fieldID, int timeout) {
@@ -96,8 +111,8 @@ public class Driver {
 			.until(ExpectedConditions.presenceOfElementLocated(By.id(fieldID)));
 	}
 	
-	public void wait(int timeoutInSeconds) {
-		webDriver.manage().timeouts().implicitlyWait(timeoutInSeconds, TimeUnit.SECONDS);
+	public void wait(int timeoutInSeconds) throws InterruptedException {
+		Thread.sleep(timeoutInSeconds*1000);
 	}
 	
 	public void closeBrowser() {
