@@ -44,13 +44,15 @@ public class HotPageTest {
 	@Test
 	public void testUpvoteCountOnHotPost() {
 		hotPage.enterHotSection();
-
+		
+		//Given
 		int pointsBeforeUpVote = hotPage.getNumberOfUpVotes();
 		
+		//When
 		hotPage.upvoteFirstPost();
-		
+
+		//Then
 		int pointsAfterUpVote = hotPage.getNumberOfUpVotes();
-		
 		assertEquals(pointsBeforeUpVote + 1, pointsAfterUpVote);
 	}
 }

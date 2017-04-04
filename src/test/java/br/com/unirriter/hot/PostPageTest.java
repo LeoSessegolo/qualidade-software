@@ -46,9 +46,8 @@ public class PostPageTest {
 	
 	@Test
 	public void testCommentOnPost() throws InterruptedException {
-		postPage.enterPost();
-		
 		//Given
+		postPage.enterPost();
 		String comment = "This is so cool! I am commenting using Selenium WebDriver!";
 		
 		//When

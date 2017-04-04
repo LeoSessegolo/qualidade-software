@@ -1,0 +1,42 @@
+1º funcionalidade - Login no sistema
+Dado que estou na página inical para fazer login
+com username 'leonardo.sessegolo@gmail'
+e senha 'xxxxxxxxxx'
+Quando eu clico no botão de login
+Então a mensagem 'Awww Yeah! Welcome back.' de sucesso deve aparecer
+e o nome de usuário 'Leonardo Sessegolo' deve aparecer no profile
+
+
+2º funcionalidade - Alterar campos do cadastro
+Dado que estou logado na página de cadastro do usuario
+com alteração no país de origen ('br' ou 'us') 
+e uma descrição do perfil com a mensagem 'I was updated by selenium webDriver! This is great!'
+Quando eu mudo os dados e salvo a alteração de cadastro
+Então a mensagem 'Your settings have been saved.' deve aparecer
+e o cadastro deve mudar conforme os novos dados
+
+
+3º funcionalidade - Dar upvote no post mais recente da seção 'Hot'
+Dado que estou logado na seção 'Hot' de posts
+e verifico a quantidade de upvotes do post mais recente
+Quando eu dou upvote no post
+Então deve perceber que o total de upvotes deve aumentar em +1
+em relação ao anterior
+
+
+4º funcionalidade - Comentar como usuário logado no post mais recente da seção 'Hot' e apagá-lo
+Dado que estou logado na seção 'Hot' de posts
+Quando eu entro no post mais recente
+e comento a mensagem 'This is so cool! I am commenting using Selenium WebDriver!'
+Então eu devo verificar a mensagem como novo comentário
+e o nome de usuário 'leonardosesseg'
+Quando eu apago o comentário
+Então ele deve sumir da lista de comentários e não aparecer mais
+
+
+5º funcionalidade - Fazer upload de um novo post criado no gerador de memes
+Dado que estou logado
+com a url 'http://i.memeful.com/memes/deAZzyd/Confession-Bear.jpg' para o novo post
+e título 'Using Selenium for college and stuff'
+Quando eu faço upload do novo post
+Então devo verificar a nova página do post com o título igual ao inserido na criação
