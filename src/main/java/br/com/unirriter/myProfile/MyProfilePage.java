@@ -22,6 +22,18 @@ public class MyProfilePage extends PageObjectDriver {
 		this.loginPage = loginPage;
 	}
 	
+	public void login(String email, String password) {
+		loginPage.login(email, password);
+	}
+	
+	public boolean isSuccessfulMessageShown() {
+		return loginPage.isSuccessfulMessageShown();
+	}
+	
+	public String getCallBackMessage() {
+		return loginPage.getCallBackMessage();
+	}
+	
 	public String getUserInformation() {
 		this.enterLoginInfo();
 		

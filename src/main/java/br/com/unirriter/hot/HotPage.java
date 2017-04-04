@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
 import br.com.unirriter.driver.PageObjectDriver;
+import br.com.unirriter.login.LoginPage;
 
 public class HotPage extends PageObjectDriver {
 
@@ -23,8 +24,15 @@ public class HotPage extends PageObjectDriver {
 	@FindBy(className="badge-item-love-count")
 	private WebElement countPoints;
 	
-	public HotPage(WebDriver webDriver) {
+	private LoginPage loginPage;
+	
+	public HotPage(WebDriver webDriver, LoginPage loginPage) {
 		super(webDriver);
+		this.loginPage = loginPage;
+	}
+	
+	public void login(String email, String password) {
+		loginPage.login(email, password);
 	}
 	
 	public void enterHotSection() {
@@ -42,7 +50,7 @@ public class HotPage extends PageObjectDriver {
 		WebElement comment = comments.get(0);
 		comment.click();
 		
-		 Thread.sleep(2000);
+		this.wait(2);
 		
 		this.switchWindow(currentTab);
 	}

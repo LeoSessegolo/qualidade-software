@@ -1,6 +1,7 @@
 package br.com.unirriter.hot;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,8 +16,6 @@ import br.com.unirriter.login.LoginPage;
 public class PostPageTest {
 
 	private HomePage homePage;
-	private LoginPage loginPage;
-	private HotPage hotPage;
 	private PostPage postPage;
 	
 	@BeforeClass
@@ -30,14 +29,14 @@ public class PostPageTest {
 		homePage = new HomePage(chromeDriver);
 		homePage.openHomePage();
 		
-		loginPage = new LoginPage(chromeDriver);
-		hotPage = new HotPage(chromeDriver);
-		postPage = new PostPage(chromeDriver);
+		LoginPage loginPage = new LoginPage(chromeDriver);
+		HotPage hotPage = new HotPage(chromeDriver, loginPage);
+		postPage = new PostPage(chromeDriver, loginPage, hotPage);
 		
 		String email = "leonardo.sessegolo@gmail.com";
 		String password = "plinio.marinez!12";
 		
-		loginPage.login(email, password);
+		postPage.login(email, password);
 	}
 	
 	@After
@@ -47,8 +46,7 @@ public class PostPageTest {
 	
 	@Test
 	public void testCommentOnPost() throws InterruptedException {
-		hotPage.enterHotSection();
-		hotPage.enterCommentsFirstPost();
+		postPage.enterPost();
 		
 		//Given
 		String comment = "This is so cool! I am commenting using Selenium WebDriver!";

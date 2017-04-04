@@ -1,7 +1,6 @@
-package br.com.unirriter.myProfile;
+package br.com.unirriter.upload;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,10 +11,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import br.com.unirriter.home.HomePage;
 import br.com.unirriter.login.LoginPage;
 
-public class MyProfileTest {
+public class UploadPageTest {
 
 	private HomePage homePage;
-	private MyProfilePage myProfilePage;
+	private UploadPage uploadPage;
 	
 	@BeforeClass
 	public static void beforeClass() {
@@ -29,7 +28,12 @@ public class MyProfileTest {
 		homePage.openHomePage();
 		
 		LoginPage loginPage = new LoginPage(chromeDriver);
-		myProfilePage = new MyProfilePage(chromeDriver, loginPage);
+		uploadPage = new UploadPage(chromeDriver, loginPage);
+		
+		String email = "leonardo.sessegolo@gmail.com";
+		String password = "plinio.marinez!12";
+		
+		uploadPage.login(email, password);
 	}
 	
 	@After
@@ -38,20 +42,18 @@ public class MyProfileTest {
 	}
 	
 	@Test
-	public void testLoginAndCheckMyProfileName() {
+	public void testUploadNewPost() throws InterruptedException {
+		uploadPage.clickUploadButton();
+		
 		//Given
-		String email = "leonardo.sessegolo@gmail.com";
-		String password = "plinio.marinez!12";
+		String memeUrl = "http://i.memeful.com/memes/deAZzyd/Confession-Bear.jpg";
+		String title = "Using Selenium for college and stuff";
 		
 		//When
-		myProfilePage.login(email, password);
+		uploadPage.uploadURLMeme(memeUrl, title);
 		
 		//Then
-		assertTrue(myProfilePage.isSuccessfulMessageShown());
-		String successfulMessage = myProfilePage.getCallBackMessage();
-		assertEquals("Awww Yeah! Welcome back.", successfulMessage);
-		
-		String loginInfo = myProfilePage.getUserInformation();
-		assertTrue(loginInfo.contains("Leonardo Sessegolo"));
+		String postTitle = uploadPage.getPostTitle();
+		assertEquals(title, postTitle);
 	}
 }

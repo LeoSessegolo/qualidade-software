@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
 import br.com.unirriter.driver.PageObjectDriver;
+import br.com.unirriter.login.LoginPage;
 
 public class PostPage extends PageObjectDriver {
 
@@ -26,8 +27,23 @@ public class PostPage extends PageObjectDriver {
 	@FindBy(linkText="Delete comment")
 	private WebElement deleteCommentButton;
 	
-	public PostPage(WebDriver webDriver) {
+	private LoginPage loginPage;
+	
+	private HotPage hotPage;
+	
+	public PostPage(WebDriver webDriver, LoginPage loginPage, HotPage hotPage) {
 		super(webDriver);
+		this.loginPage = loginPage;
+		this.hotPage = hotPage;
+	}
+	
+	public void login(String email, String password) {
+		loginPage.login(email, password);
+	}
+	
+	public void enterPost() throws InterruptedException {
+		hotPage.enterHotSection();
+		hotPage.enterCommentsFirstPost();
 	}
 	
 	public void writeComment(String comment) {

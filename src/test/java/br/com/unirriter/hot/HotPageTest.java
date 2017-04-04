@@ -1,6 +1,6 @@
 package br.com.unirriter.hot;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,7 +14,6 @@ import br.com.unirriter.login.LoginPage;
 public class HotPageTest {
 
 	private HomePage homePage;
-	private LoginPage loginPage;
 	private HotPage hotPage;
 	
 	@BeforeClass
@@ -28,13 +27,13 @@ public class HotPageTest {
 		homePage = new HomePage(chromeDriver);
 		homePage.openHomePage();
 		
-		loginPage = new LoginPage(chromeDriver);
-		hotPage = new HotPage(chromeDriver);
+		LoginPage loginPage = new LoginPage(chromeDriver);
+		hotPage = new HotPage(chromeDriver, loginPage);
 		
 		String email = "leonardo.sessegolo@gmail.com";
 		String password = "plinio.marinez!12";
 		
-		loginPage.login(email, password);
+		hotPage.login(email, password);
 	}
 	
 	@After

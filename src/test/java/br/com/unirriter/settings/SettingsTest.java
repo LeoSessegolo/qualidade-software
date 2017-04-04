@@ -18,7 +18,6 @@ import br.com.unirriter.myProfile.MyProfilePage;
 public class SettingsTest {
 
 	private HomePage homePage;
-	private LoginPage loginPage;
 	private MyProfilePage myProfilePage;
 	private SettingsPage settingsPage;
 	
@@ -33,14 +32,14 @@ public class SettingsTest {
 		homePage = new HomePage(chromeDriver);
 		homePage.openHomePage();
 		
-		loginPage = new LoginPage(chromeDriver);
+		LoginPage loginPage = new LoginPage(chromeDriver);
 		settingsPage = new SettingsPage(chromeDriver, loginPage);
 		myProfilePage = new MyProfilePage(chromeDriver, loginPage);
 		
 		String email = "leonardo.sessegolo@gmail.com";
 		String password = "plinio.marinez!12";
 		
-		loginPage.login(email, password);
+		settingsPage.login(email, password);
 		settingsPage.enterSettings();
 	}
 	

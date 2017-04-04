@@ -35,6 +35,10 @@ public class SettingsPage extends PageObjectDriver {
 		super(webDriver);
 		this.loginPage = loginPage;
 	}
+	
+	public void login(String email, String password) {
+		loginPage.login(email, password);
+	}
 
 	public void changeCountry(boolean isUnitedStates) {
 		if (countrySelect != null) {
