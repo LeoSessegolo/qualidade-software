@@ -45,6 +45,8 @@ public class SettingsTest {
 	
 	@After
 	public void tearDown() {
+		settingsPage.logout();
+		
 		homePage.closeHomePage();
 	}
 

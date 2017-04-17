@@ -38,6 +38,8 @@ public class UploadPageTest {
 	
 	@After
 	public void tearDown() {
+		uploadPage.logout();
+		
 		homePage.closeHomePage();
 	}
 	

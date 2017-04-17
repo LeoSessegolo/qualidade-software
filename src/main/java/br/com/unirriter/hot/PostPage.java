@@ -41,6 +41,10 @@ public class PostPage extends PageObjectDriver {
 		loginPage.login(email, password);
 	}
 	
+	public void logout() {
+		loginPage.logout();
+	}
+	
 	public void enterPost() throws InterruptedException {
 		hotPage.enterHotSection();
 		hotPage.enterCommentsFirstPost();

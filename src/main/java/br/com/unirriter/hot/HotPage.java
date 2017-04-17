@@ -35,6 +35,10 @@ public class HotPage extends PageObjectDriver {
 		loginPage.login(email, password);
 	}
 	
+	public void logout() {
+		loginPage.logout();
+	}
+	
 	public void enterHotSection() {
 		hotSection.click();
 	}

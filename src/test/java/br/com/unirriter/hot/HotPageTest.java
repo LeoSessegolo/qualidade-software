@@ -38,6 +38,8 @@ public class HotPageTest {
 	
 	@After
 	public void tearDown() {
+		hotPage.logout();
+		
 		homePage.closeHomePage();
 	}
 	

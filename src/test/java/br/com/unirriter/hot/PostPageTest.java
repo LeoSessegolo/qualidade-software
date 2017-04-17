@@ -41,6 +41,8 @@ public class PostPageTest {
 	
 	@After
 	public void tearDown() {
+		postPage.logout();
+		
 		homePage.closeHomePage();
 	}
 	

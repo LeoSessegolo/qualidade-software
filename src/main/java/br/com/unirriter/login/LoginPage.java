@@ -26,6 +26,9 @@ public class LoginPage extends PageObjectDriver {
 	@FindBy(className="badge-toast-message")
 	private WebElement successfulMessage;
 	
+	@FindBy(linkText = "Logout")
+	private WebElement logOutButton;
+	
 	public LoginPage(WebDriver webDriver) {
 		super(webDriver);
 	}
@@ -38,6 +41,12 @@ public class LoginPage extends PageObjectDriver {
 		this.clickLogin();
 	}
 	
+	public void logout() {
+		this.clickPicture();
+		
+		this.logOutButton.click();
+	}
+
 	private void enterEmail(String email) {
 		this.email.clear();
 		this.email.sendKeys(email);

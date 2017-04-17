@@ -44,6 +44,10 @@ public class UploadPage extends PageObjectDriver {
 		loginPage.login(email, password);
 	}
 	
+	public void logout() {
+		loginPage.logout();
+	}
+	
 	public void clickUploadButton() {
 		uploadButton.click();
 	}

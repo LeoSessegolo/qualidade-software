@@ -26,6 +26,10 @@ public class MyProfilePage extends PageObjectDriver {
 		loginPage.login(email, password);
 	}
 	
+	public void logout() {
+		loginPage.logout();
+	}
+	
 	public boolean isSuccessfulMessageShown() {
 		return loginPage.isSuccessfulMessageShown();
 	}

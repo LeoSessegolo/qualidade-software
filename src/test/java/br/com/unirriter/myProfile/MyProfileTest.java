@@ -34,6 +34,8 @@ public class MyProfileTest {
 	
 	@After
 	public void tearDown() {
+		myProfilePage.logout();
+		
 		homePage.closeHomePage();
 	}
 	
